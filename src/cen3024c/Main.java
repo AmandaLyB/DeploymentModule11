@@ -9,22 +9,15 @@ import java.net.Socket;
 public class Main {
     private static ServerSocket server;
     private static int port = 1236;
-
-
-//    public static void GUI() {
-//        JFrame f = new JFrame();
-//        JFrame.setDefaultLookAndFeelDecorated(true);
-//        f.setTitle("Deployment Assignment");
-//        f.setDefaultCloseOperation(WindowConstants.EXIT_ON_CLOSE);
-//    }
     public static void main(String[] args) throws IOException, ClassNotFoundException {
 
         server = new ServerSocket(port);
-
         while(true){
             System.out.println("Awaiting input:\n");
             Socket socket = server.accept();
             DataInputStream inputFromClient = new DataInputStream(socket.getInputStream());
+
+            // get input from client
             int num = inputFromClient.readInt();
             System.out.println("Client has input " + num);
             DataOutputStream outputToClient = new DataOutputStream(socket.getOutputStream());
@@ -33,16 +26,20 @@ public class Main {
             // flag 1 = not prime
             int flag = 0;
 
-            // 0 and 1
+            // 0 and 1 = not prime
             if (num == 0 || num == 1){
                 flag = 1;
             }
+
+            // determine if user number is prime or not prime
             for (int i = 2; i <= num / 2; ++i){
                 if (num % i == 0) {
                     flag = 1;
                     break;
                 }
             }
+
+            // send correct information back to client
             if (flag == 0) {
                 outputToClient.writeInt(0);
             }
@@ -54,12 +51,5 @@ public class Main {
             socket.close();
             if(num < 0) break;
         }
-
-//        SwingUtilities.invokeLater(new Runnable() {
-//            @Override
-//            public void run() {
-//                GUI();
-//            }
-//        });
     }
 }
