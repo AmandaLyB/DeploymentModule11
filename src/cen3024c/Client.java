@@ -29,10 +29,10 @@ public class Client {
             inputFromServer = new DataInputStream(socket.getInputStream());
             int num = inputFromServer.readInt();
             if (num == 0) {
-                System.out.println("Server says your number is not prime");
+                System.out.println("Server says your number is prime");
             }
             else {
-                System.out.println("Server says your number is prime");
+                System.out.println("Server says your number is not prime");
             }
             outputToServer.close();
             inputFromServer.close();
